@@ -1,0 +1,38 @@
+body {
+	font-family: sans-serif;
+	color: #000;
+	background-color: #ddd;
+	margin: 40px;
+	overflow: hidden;
+}
+.sweepline {
+	fill: none;
+	stroke: #99f;
+	stroke-width: 0.5px;
+	stroke-linecap: round;
+}
+.line {
+	fill: none;
+	stroke: #ccc;
+	stroke-width: 0.5px;
+}
+.bg {
+	fill: #fff;
+}
+.point {
+	fill: #999;
+}
+.button {
+	color: #157;
+	border: 2px solid #bbb;
+	background: #eee;
+	padding: 8px;
+	text-align: center;
+	width: 100px;
+	cursor: pointer;
+	-webkit-border-radius: 8px;
+	font-weight: bold;
+}
+.button:hover { background: #f3f3f3; }
+.button:active { background: #f9f9f9; }
+
