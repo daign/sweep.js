@@ -4,7 +4,7 @@ SWEEP.Line = function ( simulation ) {
 	this.startPoint = undefined;
 	this.endPoint = undefined;
 
-	this.line = document.createElementNS( SWEEP.SVG, 'line' );
+	this.line = document.createElementNS( SWEEP.SVGNS, 'line' );
 	this.line.setAttribute( 'class', 'line' );
 	this.simulation.svg.appendChild( this.line );
 

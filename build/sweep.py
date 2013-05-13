@@ -5,8 +5,7 @@ FILES = "\
 	../src/js-dev/Simulation.js\
 	../src/js-dev/Sweepline.js\
 	../src/js-dev/Line.js\
-	../src/js-dev/Point.js\
-	../src/js-dev/Animation.js"
+	../src/js-dev/Point.js"
 
 #LEVEL = "WHITESPACE_ONLY"
 LEVEL = "SIMPLE_OPTIMIZATIONS"
