@@ -2,10 +2,12 @@ import os
 
 FILES = "\
 	../src/js-dev/sweep.js\
-	../src/js-dev/Simulation.js\
+	../src/js-dev/SVG.js\
+	../src/js-dev/Gui.js\
 	../src/js-dev/Sweepline.js\
-	../src/js-dev/Line.js\
-	../src/js-dev/Point.js"
+	../src/js-dev/Input.js\
+	../src/js-dev/Point.js\
+	../src/js-dev/Line.js"
 
 #LEVEL = "WHITESPACE_ONLY"
 LEVEL = "SIMPLE_OPTIMIZATIONS"

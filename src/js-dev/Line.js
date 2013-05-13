@@ -1,12 +1,11 @@
-SWEEP.Line = function ( simulation ) {
+SWEEP.Line = function () {
 
-	this.simulation = simulation;
 	this.startPoint = undefined;
 	this.endPoint = undefined;
 
 	this.line = document.createElementNS( SWEEP.SVGNS, 'line' );
 	this.line.setAttribute( 'class', 'line' );
-	this.simulation.svg.appendChild( this.line );
+	SWEEP.SVG.appendChild( this.line );
 
 };
 
@@ -41,7 +40,7 @@ SWEEP.Line.prototype = {
 	},
 
 	getSweepIntersection: function () {
-		var p = this.simulation.sweepline.position + 0.001;
+		var p = SWEEP.Sweepline.position + 0.001;
 		var m = ( this.endPoint.y - this.startPoint.y ) / ( this.endPoint.x - this.startPoint.x );
 		var n = this.endPoint.y - m * this.endPoint.x;
 		return (p-n)/m;

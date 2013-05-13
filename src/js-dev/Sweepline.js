@@ -1,24 +1,19 @@
-SWEEP.Sweepline = function ( simulation ) {
+SWEEP.Sweepline = {
 
-	this.simulation = simulation;
+	position: 0,
+	pairs: [],
 
-	this.line = document.createElementNS( SWEEP.SVGNS, 'line' );
-	this.line.setAttribute( 'x1', 0 );
-	this.line.setAttribute( 'x2', 100 );
-	this.line.setAttribute( 'class', 'sweepline' );
-	this.simulation.svg.appendChild( this.line );
+	init: function () {
 
-	this.position = 0;
-	this.setPosition();
+		this.line = document.createElementNS( SWEEP.SVGNS, 'line' );
+		this.line.setAttribute( 'x1', 0 );
+		this.line.setAttribute( 'x2', 100 );
+		this.line.setAttribute( 'class', 'sweepline' );
+		SWEEP.SVG.appendChild( this.line );
 
-	this.status = new js_cols.RedBlackSet( SWEEP.compare );
-	this.pairs = [];
+		this.setPosition();
 
-};
-
-SWEEP.Sweepline.prototype = {
-
-	constructor: SWEEP.Sweepline,
+	},
 
 	setPosition: function () {
 
@@ -34,11 +29,11 @@ SWEEP.Sweepline.prototype = {
 		if ( d.intersection ) {
 
 			console.log( 'Event:' + d.toString() + '; Switching; Status:' );
-			var t = this.status.clone();
-			this.status.clear();
-			this.status.insertAll( t );
-			var prev = this.status.predecessor( d.lines.getMax() );
-			var next = this.status.successor( d.lines.getMin() );
+			var t = SWEEP.status.clone();
+			SWEEP.status.clear();
+			SWEEP.status.insertAll( t );
+			var prev = SWEEP.status.predecessor( d.lines.getMax() );
+			var next = SWEEP.status.successor( d.lines.getMin() );
 			if ( prev !== null ) { this.pairs.push( [ prev,d.lines.getMax() ] ); }
 			if ( next !== null ) { this.pairs.push( [ d.lines.getMin(),next ] ); }
 
@@ -49,25 +44,25 @@ SWEEP.Sweepline.prototype = {
 			if ( line.startPoint === d ) {
 
 				console.log( 'Event:' + d.toString() + '; Adding; Status:' );
-				this.status.insert( line );
-				var prev = this.status.predecessor( line );
-				var next = this.status.successor( line );
+				SWEEP.status.insert( line );
+				var prev = SWEEP.status.predecessor( line );
+				var next = SWEEP.status.successor( line );
 				if ( prev !== null ) { this.pairs.push( [prev,line] ); }
 				if ( next !== null ) { this.pairs.push( [line,next] ); }
 
 			} else {
 
 				console.log( 'Event:' + d.toString() + '; Removing; Status:' );
-				var prev = this.status.predecessor( line );
-				var next = this.status.successor( line );
-				this.status.remove( line );
+				var prev = SWEEP.status.predecessor( line );
+				var next = SWEEP.status.successor( line );
+				SWEEP.status.remove( line );
 				if ( prev !== null && next !== null ) { this.pairs.push( [prev,next] ); }
 
 			}
 
 		}
 
-		this.status.traverse( function ( k, s ) {
+		SWEEP.status.traverse( function ( k, s ) {
 			console.log( '\t' + k.toString() );
 		}, this );
 
@@ -80,7 +75,7 @@ SWEEP.Sweepline.prototype = {
 		if ( this.pairs.length > 0 ) {
 			this.intersectionCheck( this.pairs.pop() );
 		} else {
-			this.sweepNext( this.simulation.events.successor( this.current ) );
+			this.sweepNext( SWEEP.events.successor( this.current ) );
 		}
 
 	},
@@ -96,13 +91,13 @@ SWEEP.Sweepline.prototype = {
 		var i = line1.intersect( line2 );
 		if ( i !== null ) {
 
-			var point = new SWEEP.Point( this.simulation.svg, i[0], i[1], true );
-			if ( !this.simulation.events.contains( point ) ) {
+			var point = new SWEEP.Point( i[0], i[1], true );
+			if ( !SWEEP.events.contains( point ) ) {
 				point.addLine( line1 );
 				point.addLine( line2 );
 				point.draw();
-				this.simulation.events.insert( point );
-				this.simulation.intersections.push( point );
+				SWEEP.events.insert( point );
+				SWEEP.intersections.insert( point );
 			}
 
 		}
@@ -129,13 +124,13 @@ SWEEP.Sweepline.prototype = {
 
 			this.current = next;
 			this.sweepTo( next.y, function () {
-				next.animate( this );
+				next.animate();
 			} );
 
 		} else {
 
 			this.sweepTo( 100, function () {
-				this.simulation.onEnd();
+				SWEEP.onEnd();
 			} );
 
 		}

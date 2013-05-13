@@ -1,6 +1,5 @@
-SWEEP.Point = function ( svg, x, y, i ) {
+SWEEP.Point = function ( x, y, i ) {
 
-	this.svg = svg;
 	this.x = x;
 	this.y = y;
 	this.lines = new js_cols.RedBlackSet( SWEEP.compare );
@@ -20,18 +19,18 @@ SWEEP.Point.prototype = {
 		this.point.setAttribute( 'r', 1 );
 		this.point.setAttribute( 'class', 'point' );
 		this.point.style.fill = this.intersection ? '#157' : '#999';
-		this.svg.appendChild( this.point );
+		SWEEP.SVG.appendChild( this.point );
 	},
 
 	remove: function () {
-		this.svg.removeChild( this.point );
+		SWEEP.SVG.removeChild( this.point );
 	},
 
 	addLine: function ( line ) {
 		this.lines.insert( line );
 	},
 
-	animate: function ( sweepline ) {
+	animate: function () {
 
 		this.action = -100;
 		this.point.style.fill = 'red';
@@ -43,7 +42,7 @@ SWEEP.Point.prototype = {
 		} )
 		.onComplete( function () {
 			this.point.style.fill = this.intersection ? '#157' : '#999';
-			sweepline.eventCall();
+			SWEEP.Sweepline.eventCall();
 		} )
 		.start();
 
