@@ -40,10 +40,19 @@ SWEEP.Line.prototype = {
 	},
 
 	getSweepIntersection: function () {
-		var p = SWEEP.Sweepline.position + 0.001;
-		var m = ( this.endPoint.y - this.startPoint.y ) / ( this.endPoint.x - this.startPoint.x );
-		var n = this.endPoint.y - m * this.endPoint.x;
-		return (p-n)/m;
+
+		var p = SWEEP.Sweepline.position + 0.0001;
+		var ax = this.startPoint.x;
+		var ay = this.startPoint.y;
+		var bx = this.endPoint.x;
+		var by = this.endPoint.y;
+
+		if ( (by-ay) === 0 ) {
+			return null;
+		} else {
+			return ( ax*by - ay*bx + p*(bx-ax) ) / ( by - ay );
+		}
+
 	},
 
 	intersect: function ( l2 ) {

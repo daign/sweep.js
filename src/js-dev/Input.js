@@ -25,6 +25,7 @@ SWEEP.Input = function () {
 	addLine( 15, 35, 90, 60 );
 	addLine( 10, 28, 25, 72 );
 	addLine( 93, 45, 70, 80 );
+	addLine( 60, 32, 60, 68 );
 
 };
 
