@@ -93,12 +93,14 @@ SWEEP.Sweepline = {
 
 			var point = new SWEEP.Point( i[0], i[1], true );
 			if ( !SWEEP.events.contains( point ) ) {
-				point.addLine( line1 );
-				point.addLine( line2 );
 				point.draw();
 				SWEEP.events.insert( point );
 				SWEEP.intersections.insert( point );
+			} else {
+				point = SWEEP.events.get_( point ).key;
 			}
+			point.addLine( line1 );
+			point.addLine( line2 );
 
 		}
 

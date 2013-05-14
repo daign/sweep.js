@@ -19,14 +19,12 @@ SWEEP.Input = function () {
 
 	};
 
-	addLine( 29, 42, 70, 10 );
-	addLine( 70, 70, 40, 22 );
-	addLine( 85, 60, 20, 80 );
-	addLine( 10, 32, 60, 90 );
-	addLine( 25, 95, 65, 4 );
-	addLine( 12, 14, 22, 26 );
-	addLine( 79, 7, 93, 55 );
-	addLine( 67, 53, 97, 44 );
+	addLine( 90, 40, 15, 65 );
+	addLine( 74, 36, 40, 70 );
+	addLine( 40, 30, 74, 64 );
+	addLine( 15, 35, 90, 60 );
+	addLine( 10, 28, 25, 72 );
+	addLine( 93, 45, 70, 80 );
 
 };
 
