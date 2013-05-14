@@ -1,10 +1,11 @@
-SWEEP.Point = function ( x, y, i ) {
+SWEEP.Point = function ( x, y ) {
 
 	this.x = x;
 	this.y = y;
-	this.lines = new js_cols.RedBlackSet( SWEEP.compare );
 
-	this.intersection = i;
+	this.starting = new js_cols.RedBlackSet( SWEEP.compare );
+	this.ending = new js_cols.RedBlackSet( SWEEP.compare );
+	this.intersecting = new js_cols.RedBlackSet( SWEEP.compare );
 
 };
 
@@ -24,10 +25,6 @@ SWEEP.Point.prototype = {
 
 	remove: function () {
 		SWEEP.SVG.removeChild( this.point );
-	},
-
-	addLine: function ( line ) {
-		this.lines.insert( line );
 	},
 
 	animate: function () {
@@ -62,7 +59,13 @@ SWEEP.Point.prototype = {
 		} else if ( b.y < this.y ) {
 			return 1;
 		} else {
-			return 0;
+			if ( this.x < b.x ) {
+				return -1;
+			} else if ( b.x < this.x ) {
+				return 1;
+			} else {
+				return 0;
+			}
 		}
 	}
 

@@ -26,39 +26,39 @@ SWEEP.Sweepline = {
 
 		var d = this.current;
 
-		if ( d.intersection ) {
+		if ( !d.ending.isEmpty() ) {
+
+			console.log( 'Event:' + d.toString() + '; Removing; Status:' );
+			var line = d.ending.getMin();
+			var prev = SWEEP.status.predecessor( line );
+			var next = SWEEP.status.successor( line );
+			SWEEP.status.remove( line );
+			if ( prev !== null && next !== null ) { this.pairs.push( [prev,next] ); }
+
+		}
+
+		if ( !d.intersecting.isEmpty() ) {
 
 			console.log( 'Event:' + d.toString() + '; Switching; Status:' );
 			var t = SWEEP.status.clone();
 			SWEEP.status.clear();
 			SWEEP.status.insertAll( t );
-			var prev = SWEEP.status.predecessor( d.lines.getMax() );
-			var next = SWEEP.status.successor( d.lines.getMin() );
-			if ( prev !== null ) { this.pairs.push( [ prev,d.lines.getMax() ] ); }
-			if ( next !== null ) { this.pairs.push( [ d.lines.getMin(),next ] ); }
+			var prev = SWEEP.status.predecessor( d.intersecting.getMax() );
+			var next = SWEEP.status.successor( d.intersecting.getMin() );
+			if ( prev !== null ) { this.pairs.push( [ prev,d.intersecting.getMax() ] ); }
+			if ( next !== null ) { this.pairs.push( [ d.intersecting.getMin(),next ] ); }
 
-		} else {
+		}
 
-			var line = d.lines.getMin();
+		if ( !d.starting.isEmpty() ) {
 
-			if ( line.startPoint === d ) {
-
-				console.log( 'Event:' + d.toString() + '; Adding; Status:' );
-				SWEEP.status.insert( line );
-				var prev = SWEEP.status.predecessor( line );
-				var next = SWEEP.status.successor( line );
-				if ( prev !== null ) { this.pairs.push( [prev,line] ); }
-				if ( next !== null ) { this.pairs.push( [line,next] ); }
-
-			} else {
-
-				console.log( 'Event:' + d.toString() + '; Removing; Status:' );
-				var prev = SWEEP.status.predecessor( line );
-				var next = SWEEP.status.successor( line );
-				SWEEP.status.remove( line );
-				if ( prev !== null && next !== null ) { this.pairs.push( [prev,next] ); }
-
-			}
+			console.log( 'Event:' + d.toString() + '; Adding; Status:' );
+			var line = d.starting.getMin();
+			SWEEP.status.insert( line );
+			var prev = SWEEP.status.predecessor( line );
+			var next = SWEEP.status.successor( line );
+			if ( prev !== null ) { this.pairs.push( [prev,line] ); }
+			if ( next !== null ) { this.pairs.push( [line,next] ); }
 
 		}
 
@@ -99,8 +99,8 @@ SWEEP.Sweepline = {
 			} else {
 				point = SWEEP.events.get_( point ).key;
 			}
-			point.addLine( line1 );
-			point.addLine( line2 );
+			point.intersecting.insert( line1 );
+			point.intersecting.insert( line2 );
 
 		}
 
