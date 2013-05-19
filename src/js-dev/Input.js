@@ -1,8 +1,8 @@
 SWEEP.Input = function () {
 
-	new SWEEP.Line( 20, 20, 20, 80 );
-	new SWEEP.Line( 30, 30, 30, 70 );
-	new SWEEP.Line( 40, 40, 10, 60 );
+	new SWEEP.Line( 20, 20, 40, 40 );
+	new SWEEP.Line( 30, 25, 40, 40 );
+	new SWEEP.Line( 50, 30, 20, 60 );
 
 };
 

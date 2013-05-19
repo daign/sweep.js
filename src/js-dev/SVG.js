@@ -16,14 +16,28 @@ SWEEP.SVG = {
 		bg.setAttribute( 'class', 'bg' );
 		this.context.appendChild( bg );
 
+		this.lines = document.createElementNS( SWEEP.SVGNS, 'g' );
+		this.context.appendChild( this.lines );
+
+		this.points = document.createElementNS( SWEEP.SVGNS, 'g' );
+		this.context.appendChild( this.points );
+
 	},
 
-	appendChild: function ( a ) {
-		this.context.appendChild( a );
+	appendPoint: function ( a ) {
+		this.points.appendChild( a );
 	},
 
-	removeChild: function ( a ) {
-		this.context.removeChild( a );
+	removePoint: function ( a ) {
+		this.points.removeChild( a );
+	},
+
+	appendLine: function ( a ) {
+		this.lines.appendChild( a );
+	},
+
+	removeLine: function ( a ) {
+		this.lines.removeChild( a );
 	}
 
 };

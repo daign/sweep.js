@@ -14,7 +14,6 @@ var SWEEP = {
 		this.points = new js_cols.RedBlackSet( this.compare );
 		this.events = new js_cols.RedBlackSet( this.compare );
 		this.status = new js_cols.RedBlackSet( this.compare );
-		this.intersections = new js_cols.RedBlackSet( this.compare );
 
 		SWEEP.SVG.init();
 		SWEEP.Gui.init();
@@ -44,22 +43,26 @@ var SWEEP = {
 		SWEEP.Sweepline.position = 0;
 		SWEEP.Sweepline.setPosition();
 
-		this.status.clear();
+		this.events.traverse( function ( k, s ) {
+			k.intersecting.clear();
+			if ( k.starting.isEmpty() && k.ending.isEmpty() ) {
+				k.remove();
+			}
+		}, this );
 		this.events.clear();
 		this.events.insertAll( SWEEP.points );
 
-		this.intersections.traverse( function ( k, s ) {
-			k.remove();
-		}, this );
-		this.intersections.clear();
+		this.status.clear();
 
 	},
 
 	onEnd: function () {
 
 		console.log( '\nIntersections:' );
-		this.intersections.traverse( function ( k, s ) {
-			console.log( '\t' + k.toString() );
+		this.events.traverse( function ( k, s ) {
+			if ( !k.intersecting.isEmpty() ) {
+				console.log( '\t' + k.toString() );
+			}
 		}, this );
 
 		this.sweepActive = false;

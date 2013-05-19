@@ -20,11 +20,11 @@ SWEEP.Point.prototype = {
 		this.point.setAttribute( 'r', 1 );
 		this.point.setAttribute( 'class', 'point' );
 		this.point.style.fill = this.intersection ? '#157' : '#999';
-		SWEEP.SVG.appendChild( this.point );
+		SWEEP.SVG.appendPoint( this.point );
 	},
 
 	remove: function () {
-		SWEEP.SVG.removeChild( this.point );
+		SWEEP.SVG.removePoint( this.point );
 	},
 
 	animate: function () {

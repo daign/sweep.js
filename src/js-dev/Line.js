@@ -11,14 +11,10 @@ SWEEP.Line = function ( x1, y1, x2, y2 ) {
 	this.line.setAttribute( 'x2', this.x2 );
 	this.line.setAttribute( 'y2', this.y2 );
 	this.line.setAttribute( 'class', 'line' );
-	SWEEP.SVG.appendChild( this.line );
+	SWEEP.SVG.appendLine( this.line );
 
-	var point1 = new SWEEP.Point( x1, y1 );
-	var point2 = new SWEEP.Point( x2, y2 );
-	point1.draw();
-	point2.draw();
-	SWEEP.points.insert( point1 );
-	SWEEP.points.insert( point2 );
+	var point1 = this.addPoint( x1, y1 );
+	var point2 = this.addPoint( x2, y2 );
 
 	if ( point2.compare( point1 ) > 0 ) {
 
@@ -46,6 +42,21 @@ SWEEP.Line.prototype = {
 		} else {
 			return 0;
 		}
+	},
+
+	addPoint: function ( x, y ) {
+
+		var point = new SWEEP.Point( x, y );
+
+		if ( !SWEEP.points.contains( point ) ) {
+			point.draw();
+			SWEEP.points.insert( point );
+		} else {
+			point = SWEEP.points.get_( point ).key;
+		}
+
+		return point;
+
 	},
 
 	getSweepIntersection: function () {
