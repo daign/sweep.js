@@ -27,37 +27,70 @@ SWEEP.Sweepline = {
 		var d = this.current;
 		var actions = [];
 
-		if ( !d.intersecting.isEmpty() ) {
+		if (
+			   !d.intersecting.isEmpty()
+			|| ( d.starting.size + d.ending.size ) > 1
+		) {
 
-			var t = SWEEP.status.clone();
-			SWEEP.status.clear();
-			SWEEP.status.insertAll( t );
+			SWEEP.status = SWEEP.status.clone();
+			d.starting = d.starting.clone();
+			d.ending = d.ending.clone();
+			d.intersecting = d.intersecting.clone();
 
-		}
+			if (
+				   !d.ending.isEmpty()
+				&& d.intersecting.isSubsetOf( d.ending )
+				&& d.starting.isEmpty()
+			) {
 
-		if ( !d.ending.isEmpty() ) {
+				actions.push( 'Removing' );
+				var prev = SWEEP.status.predecessor( d.ending.getMin() );
+				var next = SWEEP.status.successor( d.ending.getMax() );
+				SWEEP.status.removeAll( d.ending );
+				this.pairs.push( [ prev, next ] );
+
+			} else {
+
+				var continuing = d.intersecting.clone();
+
+				if ( !d.ending.isEmpty() ) {
+					actions.push( 'Removing' );
+					continuing.removeAll( d.ending );
+					SWEEP.status.removeAll( d.ending );
+					d.intersecting.insertAll( d.ending );
+				}
+
+				if ( !continuing.isEmpty() ) {
+					actions.push( 'Switching' );
+				}
+
+				if ( !d.starting.isEmpty() ) {
+					actions.push( 'Adding' );
+					continuing.insertAll( d.starting );
+					SWEEP.status.insertAll( d.starting );
+					d.intersecting.insertAll( d.starting );
+				}
+
+				var min = continuing.getMin();
+				var prev = SWEEP.status.predecessor( min );
+				this.pairs.push( [ prev, min ] );
+
+				var max = continuing.getMax();
+				var next = SWEEP.status.successor( max );
+				this.pairs.push( [ max, next ] );
+
+			}
+
+		} else if ( !d.ending.isEmpty() ) {
 
 			actions.push( 'Removing' );
-			var prev = SWEEP.status.predecessor( d.ending.getMin() );
-			var next = SWEEP.status.successor( d.ending.getMax() );
-			d.ending.traverse( function ( k, s ) {
-				SWEEP.status.remove( k );
-			}, this );
+			var line = d.ending.getMin();
+			var prev = SWEEP.status.predecessor( line );
+			var next = SWEEP.status.successor( line );
+			SWEEP.status.remove( line );
 			this.pairs.push( [ prev, next ] );
 
-		}
-
-		if ( !d.intersecting.isEmpty() ) {
-
-			actions.push( 'Switching' );
-			var prev = SWEEP.status.predecessor( d.intersecting.getMax() );
-			var next = SWEEP.status.successor( d.intersecting.getMin() );
-			this.pairs.push( [ prev, d.intersecting.getMax() ] );
-			this.pairs.push( [ d.intersecting.getMin(), next ] );
-
-		}
-
-		if ( !d.starting.isEmpty() ) {
+		} else if ( !d.starting.isEmpty() ) {
 
 			actions.push( 'Adding' );
 			var line = d.starting.getMin();
