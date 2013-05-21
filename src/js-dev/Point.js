@@ -17,7 +17,7 @@ SWEEP.Point.prototype = {
 		this.point = document.createElementNS( SWEEP.SVGNS, 'circle' );
 		this.point.setAttribute( 'cx', this.x );
 		this.point.setAttribute( 'cy', this.y );
-		this.point.setAttribute( 'r', 1 );
+		this.point.setAttribute( 'r', 4 );
 		this.point.setAttribute( 'class', 'point' );
 		this.point.style.fill = this.intersection ? '#157' : '#999';
 		SWEEP.SVG.appendPoint( this.point );
@@ -35,7 +35,7 @@ SWEEP.Point.prototype = {
 		var animation = new TWEEN.Tween( this )
 		.to( { action: 100 }, 400 * SWEEP.animationSpeed )
 		.onUpdate( function () {
-			this.setSize( (100-Math.abs(this.action)) * (2/100) + 1 );
+			this.setSize( ((100-Math.abs(this.action)) * (2/100) + 1 )*4 );
 		} )
 		.onComplete( function () {
 			this.point.style.fill = this.intersection ? '#157' : '#999';

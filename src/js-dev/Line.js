@@ -3,7 +3,7 @@ SWEEP.Line = function ( x1, y1, x2, y2 ) {
 	this.x1 = x1;
 	this.y1 = y1;
 	this.x2 = x2;
-	this.y2 = y2;
+	this.y2 = ( y1 !== y2 ) ? y2 : y2 + 1;
 
 	this.line = document.createElementNS( SWEEP.SVGNS, 'line' );
 	this.line.setAttribute( 'x1', this.x1 );
@@ -13,8 +13,8 @@ SWEEP.Line = function ( x1, y1, x2, y2 ) {
 	this.line.setAttribute( 'class', 'line' );
 	SWEEP.SVG.appendLine( this.line );
 
-	var point1 = this.addPoint( x1, y1 );
-	var point2 = this.addPoint( x2, y2 );
+	var point1 = this.addPoint( this.x1, this.y1 );
+	var point2 = this.addPoint( this.x2, this.y2 );
 
 	if ( point2.compare( point1 ) > 0 ) {
 

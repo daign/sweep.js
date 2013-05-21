@@ -18,6 +18,8 @@ var SWEEP = {
 		SWEEP.SVG.init();
 		SWEEP.Gui.init();
 		SWEEP.Sweepline.init();
+		SWEEP.SVG.resize();
+
 		SWEEP.Input();
 
 		animate();
@@ -40,9 +42,6 @@ var SWEEP = {
 
 	cleanup: function () {
 
-		SWEEP.Sweepline.position = 0;
-		SWEEP.Sweepline.setPosition();
-
 		this.events.traverse( function ( k, s ) {
 			k.intersecting.clear();
 			if ( k.starting.isEmpty() && k.ending.isEmpty() ) {
@@ -57,6 +56,9 @@ var SWEEP = {
 	},
 
 	onEnd: function () {
+
+		SWEEP.Sweepline.position = -1;
+		SWEEP.Sweepline.setPosition();
 
 		console.log( '\nIntersections:' );
 		this.events.traverse( function ( k, s ) {

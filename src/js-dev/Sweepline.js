@@ -1,18 +1,21 @@
 SWEEP.Sweepline = {
 
-	position: 0,
+	position: -1,
 	pairs: [],
 
 	init: function () {
 
 		this.line = document.createElementNS( SWEEP.SVGNS, 'line' );
 		this.line.setAttribute( 'x1', 0 );
-		this.line.setAttribute( 'x2', 100 );
 		this.line.setAttribute( 'class', 'sweepline' );
 		SWEEP.SVG.appendLine( this.line );
 
 		this.setPosition();
 
+	},
+
+	setWidth: function ( w ) {
+		this.line.setAttribute( 'x2', w );
 	},
 
 	setPosition: function () {
@@ -149,7 +152,7 @@ SWEEP.Sweepline = {
 			var animation = new TWEEN.Tween( this )
 			.to( { action: 100 }, 400 * SWEEP.animationSpeed )
 			.onUpdate( function () {
-				var size = (50-Math.abs(this.action-50))*(1/50)+0.5;
+				var size = ((50-Math.abs(this.action-50))*(1/50)+0.5)*4;
 				line1.line.style.strokeWidth = size + 'px';
 				line2.line.style.strokeWidth = size + 'px';
 			} )
@@ -179,7 +182,7 @@ SWEEP.Sweepline = {
 
 		} else {
 
-			this.sweepTo( 100, function () {
+			this.sweepTo( SWEEP.SVG.h+1, function () {
 				SWEEP.onEnd();
 			} );
 
@@ -190,7 +193,7 @@ SWEEP.Sweepline = {
 	sweepTo: function ( y, onComplete ) {
 
 		var animation = new TWEEN.Tween( this )
-		.to( { position: y }, ( y - this.position ) * 25 * SWEEP.animationSpeed )
+		.to( { position: y }, ( y - this.position ) * 5 * SWEEP.animationSpeed )
 		.onUpdate( function () {
 			this.setPosition();
 		} )

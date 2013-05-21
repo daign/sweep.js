@@ -2,19 +2,9 @@ SWEEP.SVG = {
 
 	init: function () {
 
+		var self = this;
 		this.context = document.createElementNS( SWEEP.SVGNS, 'svg' );
-		this.context.setAttribute( 'viewBox', '-1, -1, 102, 102' );
-		this.context.setAttribute( 'width', 400 + 'px' );
-		this.context.setAttribute( 'height', 400 + 'px' );
 		document.body.appendChild( this.context );
-
-		bg = document.createElementNS( SWEEP.SVGNS, 'rect' );
-		bg.setAttribute( 'x', -1 );
-		bg.setAttribute( 'y', -1 );
-		bg.setAttribute( 'width', 102 );
-		bg.setAttribute( 'height', 102 );
-		bg.setAttribute( 'class', 'bg' );
-		this.context.appendChild( bg );
 
 		this.lines = document.createElementNS( SWEEP.SVGNS, 'g' );
 		this.context.appendChild( this.lines );
@@ -22,6 +12,20 @@ SWEEP.SVG = {
 		this.points = document.createElementNS( SWEEP.SVGNS, 'g' );
 		this.context.appendChild( this.points );
 
+		function onWindowResize() {
+			self.resize();
+		}
+		window.addEventListener( 'resize', onWindowResize, false );
+
+	},
+
+	resize: function () {
+		this.w = window.innerWidth;
+		this.h = window.innerHeight;
+		this.context.setAttribute( 'viewBox', '0, 0,' + this.w + ',' + this.h );
+		this.context.setAttribute( 'width', this.w + 'px' );
+		this.context.setAttribute( 'height', this.h + 'px' );
+		SWEEP.Sweepline.setWidth( this.w );
 	},
 
 	appendPoint: function ( a ) {
