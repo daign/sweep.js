@@ -1,34 +1,38 @@
-SWEEP.Line = function ( simulation ) {
+SWEEP.Line = function ( x1, y1, x2, y2 ) {
 
-	this.simulation = simulation;
-	this.startPoint = undefined;
-	this.endPoint = undefined;
+	this.x1 = x1;
+	this.y1 = y1;
+	this.x2 = x2;
+	this.y2 = ( y1 !== y2 ) ? y2 : y2 + 1;
 
-	this.line = document.createElementNS( SWEEP.SVG, 'line' );
+	this.line = document.createElementNS( SWEEP.SVGNS, 'line' );
+	this.line.setAttribute( 'x1', this.x1 );
+	this.line.setAttribute( 'y1', this.y1 );
+	this.line.setAttribute( 'x2', this.x2 );
+	this.line.setAttribute( 'y2', this.y2 );
 	this.line.setAttribute( 'class', 'line' );
-	this.simulation.svg.appendChild( this.line );
+	SWEEP.SVG.appendLine( this.line );
+
+	var point1 = this.addPoint( this.x1, this.y1 );
+	var point2 = this.addPoint( this.x2, this.y2 );
+
+	if ( point2.compare( point1 ) > 0 ) {
+
+		point1.starting.insert( this );
+		point2.ending.insert( this );
+
+	} else {
+
+		point2.starting.insert( this );
+		point1.ending.insert( this );
+
+	}
 
 };
 
 SWEEP.Line.prototype = {
 
 	constructor: SWEEP.Line,
-
-	setPoints: function ( point1, point2 ) {
-
-		if ( point1.y < point2.y ) {
-			this.startPoint = point1;
-			this.endPoint = point2;
-		} else {
-			this.startPoint = point2;
-			this.endPoint = point1;
-		}
-		this.line.setAttribute( 'x1', this.startPoint.x );
-		this.line.setAttribute( 'y1', this.startPoint.y );
-		this.line.setAttribute( 'x2', this.endPoint.x );
-		this.line.setAttribute( 'y2', this.endPoint.y );
-
-	},
 
 	compare: function ( b ) {
 		if ( this.getSweepIntersection() < b.getSweepIntersection() ) {
@@ -40,24 +44,43 @@ SWEEP.Line.prototype = {
 		}
 	},
 
+	addPoint: function ( x, y ) {
+
+		var point = new SWEEP.Point( x, y );
+
+		if ( !SWEEP.points.contains( point ) ) {
+			point.draw();
+			SWEEP.points.insert( point );
+		} else {
+			point = SWEEP.points.get_( point ).key;
+		}
+
+		return point;
+
+	},
+
 	getSweepIntersection: function () {
-		var p = this.simulation.sweepline.position + 0.001;
-		var m = ( this.endPoint.y - this.startPoint.y ) / ( this.endPoint.x - this.startPoint.x );
-		var n = this.endPoint.y - m * this.endPoint.x;
-		return (p-n)/m;
+
+		var p = SWEEP.Sweepline.position + 0.0001;
+
+		if ( (this.y2-this.y1) === 0 ) {
+			return null;
+		} else {
+			return ( this.x1*this.y2 - this.y1*this.x2 + p*(this.x2-this.x1) ) / ( this.y2 - this.y1 );
+		}
+
 	},
 
 	intersect: function ( l2 ) {
 
-		var l1 = this;
-		var ax = l1.startPoint.x;
-		var ay = l1.startPoint.y;
-		var bx = l1.endPoint.x;
-		var by = l1.endPoint.y;
-		var cx = l2.startPoint.x;
-		var cy = l2.startPoint.y;
-		var dx = l2.endPoint.x;
-		var dy = l2.endPoint.y;
+		var ax = this.x1;
+		var ay = this.y1;
+		var bx = this.x2;
+		var by = this.y2;
+		var cx = l2.x1;
+		var cy = l2.y1;
+		var dx = l2.x2;
+		var dy = l2.y2;
 
 		var n = (bx-ax) * (dy-cy) - (by-ay) * (dx-cx);
 		if ( n !== 0 ) {
@@ -76,7 +99,7 @@ SWEEP.Line.prototype = {
 
 	toString: function () {
 
-		return '{line:[' + this.startPoint.toString() + ',' + this.endPoint.toString() + ']}';
+		return '{line:[' + this.x1 + ',' + this.y1 + ',' + this.x2 + ',' + this.y2 + ']}';
 
 	}
 

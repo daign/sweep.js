@@ -1,18 +1,11 @@
-SWEEP.Point = function ( svg, x, y, line, i ) {
+SWEEP.Point = function ( x, y ) {
 
-	this.svg = svg;
 	this.x = x;
 	this.y = y;
-	this.line = line;
-	this.intersection = i;
 
-	this.point = document.createElementNS( SWEEP.SVG, 'circle' );
-	this.point.setAttribute( 'cx', x );
-	this.point.setAttribute( 'cy', y );
-	this.point.setAttribute( 'r', 1 );
-	this.point.setAttribute( 'class', 'point' );
-	this.point.style.fill = this.intersection ? '#157' : '#999';
-	this.svg.appendChild( this.point );
+	this.starting = new js_cols.RedBlackSet( SWEEP.compare );
+	this.ending = new js_cols.RedBlackSet( SWEEP.compare );
+	this.intersecting = new js_cols.RedBlackSet( SWEEP.compare );
 
 };
 
@@ -20,21 +13,35 @@ SWEEP.Point.prototype = {
 
 	constructor: SWEEP.Point,
 
-	animate: function ( sweepline ) {
+	draw: function () {
+		this.point = document.createElementNS( SWEEP.SVGNS, 'circle' );
+		this.point.setAttribute( 'cx', this.x );
+		this.point.setAttribute( 'cy', this.y );
+		this.point.setAttribute( 'r', 4 );
+		this.point.setAttribute( 'class', 'point' );
+		this.point.style.fill = this.intersection ? '#157' : '#999';
+		SWEEP.SVG.appendPoint( this.point );
+	},
 
-		this.action = 0;
+	remove: function () {
+		SWEEP.SVG.removePoint( this.point );
+	},
+
+	animate: function () {
+
+		this.action = -100;
 		this.point.style.fill = 'red';
 
-		var callback = function () {
-			this.setSize( (50-Math.abs(this.action-50))*(2/50)+1 );
-		}
-
-		var finish = function () {
+		var animation = new TWEEN.Tween( this )
+		.to( { action: 100 }, 400 * SWEEP.animationSpeed )
+		.onUpdate( function () {
+			this.setSize( ((100-Math.abs(this.action)) * (2/100) + 1 )*4 );
+		} )
+		.onComplete( function () {
 			this.point.style.fill = this.intersection ? '#157' : '#999';
-			sweepline.eventCall();
-		}
-
-		new SWEEP.Animation( this, {action:100}, 400, callback, finish );
+			SWEEP.Sweepline.eventCall();
+		} )
+		.start();
 
 	},
 
@@ -46,17 +53,19 @@ SWEEP.Point.prototype = {
 		return '{x:' + (Math.round(this.x*100)/100) + ',y:' + (Math.round(this.y*100)/100) + '}';
 	},
 
-	remove: function () {
-		this.svg.removeChild( this.point );
-	},
-
 	compare: function ( b ) {
 		if ( this.y < b.y ) {
 			return -1;
 		} else if ( b.y < this.y ) {
 			return 1;
 		} else {
-			return 0;
+			if ( this.x < b.x ) {
+				return -1;
+			} else if ( b.x < this.x ) {
+				return 1;
+			} else {
+				return 0;
+			}
 		}
 	}
 
