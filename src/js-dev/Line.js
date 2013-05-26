@@ -28,6 +28,9 @@ SWEEP.Line = function ( x1, y1, x2, y2 ) {
 
 	}
 
+	point1.setStyle();
+	point2.setStyle();
+
 };
 
 SWEEP.Line.prototype = {

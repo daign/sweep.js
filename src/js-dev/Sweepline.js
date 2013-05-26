@@ -5,6 +5,12 @@ SWEEP.Sweepline = {
 
 	init: function () {
 
+		this.rect = document.createElementNS( SWEEP.SVGNS, 'rect' );
+		this.rect.setAttribute( 'x', 0 );
+		this.rect.setAttribute( 'height', 100 );
+		this.rect.setAttribute( 'class', 'sweeprect' );
+		SWEEP.SVG.appendLine( this.rect );
+
 		this.line = document.createElementNS( SWEEP.SVGNS, 'line' );
 		this.line.setAttribute( 'x1', 0 );
 		this.line.setAttribute( 'class', 'sweepline' );
@@ -15,11 +21,13 @@ SWEEP.Sweepline = {
 	},
 
 	setWidth: function ( w ) {
+		this.rect.setAttribute( 'width', w );
 		this.line.setAttribute( 'x2', w );
 	},
 
 	setPosition: function () {
 
+		this.rect.setAttribute( 'y', this.position - 100 );
 		this.line.setAttribute( 'y1', this.position );
 		this.line.setAttribute( 'y2', this.position );
 
@@ -61,6 +69,7 @@ SWEEP.Sweepline = {
 					continuing.removeAll( d.ending );
 					SWEEP.status.removeAll( d.ending );
 					d.intersecting.insertAll( d.ending );
+					d.setStyle();
 				}
 
 				if ( !continuing.isEmpty() ) {
@@ -72,6 +81,7 @@ SWEEP.Sweepline = {
 					continuing.insertAll( d.starting );
 					SWEEP.status.insertAll( d.starting );
 					d.intersecting.insertAll( d.starting );
+					d.setStyle();
 				}
 
 				var min = continuing.getMin();
@@ -146,6 +156,7 @@ SWEEP.Sweepline = {
 				}
 				point.intersecting.insert( line1 );
 				point.intersecting.insert( line2 );
+				point.setStyle();
 
 			}
 

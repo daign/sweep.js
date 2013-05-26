@@ -36,7 +36,7 @@ var SWEEP = {
 		this.sweepActive = true;
 
 		this.cleanup();
-		SWEEP.Sweepline.sweepNext( this.events.getMin() );
+		SWEEP.Sweepline.sweepNext( !this.events.isEmpty() ? this.events.getMin() : null );
 
 	},
 
@@ -44,6 +44,7 @@ var SWEEP = {
 
 		this.events.traverse( function ( k, s ) {
 			k.intersecting.clear();
+			k.setStyle();
 			if ( k.starting.isEmpty() && k.ending.isEmpty() ) {
 				k.remove();
 			}

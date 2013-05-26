@@ -19,8 +19,14 @@ SWEEP.Point.prototype = {
 		this.point.setAttribute( 'cy', this.y );
 		this.point.setAttribute( 'r', 4 );
 		this.point.setAttribute( 'class', 'point' );
-		this.point.style.fill = this.intersection ? '#157' : '#999';
 		SWEEP.SVG.appendPoint( this.point );
+
+		this.intersection = document.createElementNS( SWEEP.SVGNS, 'circle' );
+		this.intersection.setAttribute( 'cx', this.x );
+		this.intersection.setAttribute( 'cy', this.y );
+		this.intersection.setAttribute( 'r', 6 );
+		this.intersection.setAttribute( 'class', 'intersection' );
+		SWEEP.SVG.appendPoint( this.intersection );
 	},
 
 	remove: function () {
@@ -31,6 +37,7 @@ SWEEP.Point.prototype = {
 
 		this.action = -100;
 		this.point.style.fill = 'red';
+		this.intersection.style.stroke = 'red';
 
 		var animation = new TWEEN.Tween( this )
 		.to( { action: 100 }, 400 * SWEEP.animationSpeed )
@@ -38,7 +45,8 @@ SWEEP.Point.prototype = {
 			this.setSize( ((100-Math.abs(this.action)) * (2/100) + 1 )*4 );
 		} )
 		.onComplete( function () {
-			this.point.style.fill = this.intersection ? '#157' : '#999';
+			this.point.style.fill = '#999';
+			this.intersection.style.stroke = '#157';
 			SWEEP.Sweepline.eventCall();
 		} )
 		.start();
@@ -47,6 +55,12 @@ SWEEP.Point.prototype = {
 
 	setSize: function ( r ) {
 		this.point.setAttribute( 'r', r );
+		this.intersection.setAttribute( 'r', r+2 );
+	},
+
+	setStyle: function () {
+		this.point.style.visibility = ( this.starting.isEmpty() && this.ending.isEmpty() ) ? 'hidden' : 'visible';
+		this.intersection.style.visibility = ( this.intersecting.isEmpty() ) ? 'hidden' : 'visible';
 	},
 
 	toString: function () {
