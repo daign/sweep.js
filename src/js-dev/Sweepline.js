@@ -7,7 +7,7 @@ SWEEP.Sweepline = {
 
 		this.rect = document.createElementNS( SWEEP.SVGNS, 'rect' );
 		this.rect.setAttribute( 'x', 0 );
-		this.rect.setAttribute( 'height', 100 );
+		this.rect.setAttribute( 'height', 40 );
 		this.rect.setAttribute( 'class', 'sweeprect' );
 		SWEEP.SVG.appendLine( this.rect );
 
@@ -27,7 +27,7 @@ SWEEP.Sweepline = {
 
 	setPosition: function () {
 
-		this.rect.setAttribute( 'y', this.position - 100 );
+		this.rect.setAttribute( 'y', this.position - 40 );
 		this.line.setAttribute( 'y1', this.position );
 		this.line.setAttribute( 'y2', this.position );
 
@@ -193,7 +193,7 @@ SWEEP.Sweepline = {
 
 		} else {
 
-			this.sweepTo( SWEEP.SVG.h+1, function () {
+			this.sweepTo( SWEEP.SVG.h+41, function () {
 				SWEEP.onEnd();
 			} );
 

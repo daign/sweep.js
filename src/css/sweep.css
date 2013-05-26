@@ -12,7 +12,7 @@ body {
 	stroke-linecap: round;
 }
 .sweeprect {
-	fill: #ccf;
+	fill: url(#sweepline);
 }
 .line {
 	fill: none;
