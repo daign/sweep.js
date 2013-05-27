@@ -31,9 +31,9 @@ body {
 	color: #157;
 	border: 2px solid #bbb;
 	background: #eee;
-	padding: 8px;
 	text-align: center;
-	width: 100px;
+	width: 80px;
+	height: 60px;
 	cursor: pointer;
 	-webkit-border-radius: 8px;
 	font-weight: bold;

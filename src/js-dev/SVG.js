@@ -8,11 +8,9 @@ SWEEP.SVG = {
 
 		this.context.appendChild( this.loadXML( 'images/sweep.svg' ).documentElement.firstElementChild.nextElementSibling );
 
-		this.lines = document.createElementNS( SWEEP.SVGNS, 'g' );
-		this.context.appendChild( this.lines );
-
-		this.points = document.createElementNS( SWEEP.SVGNS, 'g' );
-		this.context.appendChild( this.points );
+		this.addGroup( 'sweepline' );
+		this.addGroup( 'line' );
+		this.addGroup( 'point' );
 
 		function onWindowResize() {
 			self.resize();
@@ -30,20 +28,23 @@ SWEEP.SVG = {
 		SWEEP.Sweepline.setWidth( this.w );
 	},
 
-	appendPoint: function ( a ) {
-		this.points.appendChild( a );
+	addGroup: function ( name ) {
+		this[ name ] = document.createElementNS( SWEEP.SVGNS, 'g' );
+		this.context.appendChild( this[ name ] );
 	},
 
-	removePoint: function ( a ) {
-		this.points.removeChild( a );
+	append: function ( element, group ) {
+		this[ group ].appendChild( element );
 	},
 
-	appendLine: function ( a ) {
-		this.lines.appendChild( a );
+	remove: function ( element, group ) {
+		this[ group ].removeChild( element );
 	},
 
-	removeLine: function ( a ) {
-		this.lines.removeChild( a );
+	removeAll: function ( group ) {
+		while ( this[ group ].hasChildNodes() ) {
+			this[ group ].removeChild( this[ group ].firstChild );
+		}
 	},
 
 	loadXML: function ( file ) {

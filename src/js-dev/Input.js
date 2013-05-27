@@ -1,4 +1,0 @@
-SWEEP.Input = function () {
-
-};
-

@@ -9,12 +9,12 @@ SWEEP.Sweepline = {
 		this.rect.setAttribute( 'x', 0 );
 		this.rect.setAttribute( 'height', 40 );
 		this.rect.setAttribute( 'class', 'sweeprect' );
-		SWEEP.SVG.appendLine( this.rect );
+		SWEEP.SVG.append( this.rect, 'sweepline' );
 
 		this.line = document.createElementNS( SWEEP.SVGNS, 'line' );
 		this.line.setAttribute( 'x1', 0 );
 		this.line.setAttribute( 'class', 'sweepline' );
-		SWEEP.SVG.appendLine( this.line );
+		SWEEP.SVG.append( this.line, 'sweepline' );
 
 		this.setPosition();
 

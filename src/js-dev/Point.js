@@ -19,18 +19,18 @@ SWEEP.Point.prototype = {
 		this.point.setAttribute( 'cy', this.y );
 		this.point.setAttribute( 'r', 4 );
 		this.point.setAttribute( 'class', 'point' );
-		SWEEP.SVG.appendPoint( this.point );
+		SWEEP.SVG.append( this.point, 'point' );
 
 		this.intersection = document.createElementNS( SWEEP.SVGNS, 'circle' );
 		this.intersection.setAttribute( 'cx', this.x );
 		this.intersection.setAttribute( 'cy', this.y );
 		this.intersection.setAttribute( 'r', 6 );
 		this.intersection.setAttribute( 'class', 'intersection' );
-		SWEEP.SVG.appendPoint( this.intersection );
+		SWEEP.SVG.append( this.intersection, 'point' );
 	},
 
 	remove: function () {
-		SWEEP.SVG.removePoint( this.point );
+		SWEEP.SVG.remove( this.point, 'point' );
 	},
 
 	animate: function () {
