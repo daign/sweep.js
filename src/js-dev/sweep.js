@@ -20,8 +20,6 @@ var SWEEP = {
 		SWEEP.Sweepline.init();
 		SWEEP.SVG.resize();
 
-		SWEEP.Input();
-
 		animate();
 		function animate() {
 			requestAnimationFrame( animate );
@@ -32,11 +30,9 @@ var SWEEP = {
 
 	sweep: function () {
 
-		if ( this.sweepActive ) { return; }
 		this.sweepActive = true;
-
 		this.cleanup();
-		SWEEP.Sweepline.sweepNext( this.events.getMin() );
+		SWEEP.Sweepline.sweepNext( !this.events.isEmpty() ? this.events.getMin() : null );
 
 	},
 
@@ -44,6 +40,7 @@ var SWEEP = {
 
 		this.events.traverse( function ( k, s ) {
 			k.intersecting.clear();
+			k.setStyle();
 			if ( k.starting.isEmpty() && k.ending.isEmpty() ) {
 				k.remove();
 			}

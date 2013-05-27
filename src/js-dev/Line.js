@@ -11,7 +11,7 @@ SWEEP.Line = function ( x1, y1, x2, y2 ) {
 	this.line.setAttribute( 'x2', this.x2 );
 	this.line.setAttribute( 'y2', this.y2 );
 	this.line.setAttribute( 'class', 'line' );
-	SWEEP.SVG.appendLine( this.line );
+	SWEEP.SVG.append( this.line, 'line' );
 
 	var point1 = this.addPoint( this.x1, this.y1 );
 	var point2 = this.addPoint( this.x2, this.y2 );
@@ -27,6 +27,9 @@ SWEEP.Line = function ( x1, y1, x2, y2 ) {
 		point1.ending.insert( this );
 
 	}
+
+	point1.setStyle();
+	point2.setStyle();
 
 };
 

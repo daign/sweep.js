@@ -11,6 +11,9 @@ body {
 	stroke-width: 2px;
 	stroke-linecap: round;
 }
+.sweeprect {
+	fill: url(#sweepline);
+}
 .line {
 	fill: none;
 	stroke: #ccc;
@@ -19,13 +22,18 @@ body {
 .point {
 	fill: #999;
 }
+.intersection {
+	fill: none;
+	stroke: #157;
+	stroke-width: 2px;
+}
 .button {
 	color: #157;
 	border: 2px solid #bbb;
 	background: #eee;
-	padding: 8px;
 	text-align: center;
-	width: 100px;
+	width: 80px;
+	height: 60px;
 	cursor: pointer;
 	-webkit-border-radius: 8px;
 	font-weight: bold;
