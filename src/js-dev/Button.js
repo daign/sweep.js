@@ -24,20 +24,20 @@ SWEEP.Button.prototype = {
 
 	constructor: SWEEP.Button,
 
-	setGeometry: function ( x, y, height ) {
+	setGeometry: function ( x, y, height, padding ) {
 
 		this.text.style.fontSize = height*0.5 + 'px';
 		var width = this.text.offsetWidth;
 
-		this.text.setAttribute( 'x', x+Math.round(width*0.3) );
+		this.text.setAttribute( 'x', x+padding );
 		this.text.setAttribute( 'y', y+height*0.68 );
 
 		this.rect.setAttribute( 'x', x );
 		this.rect.setAttribute( 'y', y );
-		this.rect.setAttribute( 'width', Math.round(width*1.6) );
+		this.rect.setAttribute( 'width', width+2*padding );
 		this.rect.setAttribute( 'height', height );
 
-		return Math.round(width*1.6);
+		return width+2*padding;
 
 	}
 
