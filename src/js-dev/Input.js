@@ -22,19 +22,20 @@ SWEEP.Input = function () {
 	SWEEP.SVG.append( this.line, 'gui' );
 
 	document.addEventListener( 'mousedown', beginDraw, false );
+	document.addEventListener( 'touchstart', beginDraw, false);
 
 	function beginDraw( event ) {
 
 		if ( SWEEP.sweepActive ) { return; }
-		if ( event.clientY > SWEEP.SVG.drawingAreaHeight ) { return };
+		if ( ( event.clientY || event.touches[ 0 ].clientY ) > SWEEP.SVG.drawingAreaHeight ) { return };
 
 		event.preventDefault();
 		event.stopPropagation();
 
-		var x1 = event.clientX;
-		var y1 = event.clientY;
-		var x2 = event.clientX;
-		var y2 = event.clientY;
+		var x1 = event.clientX || event.touches[ 0 ].clientX;
+		var y1 = event.clientY || event.touches[ 0 ].clientY;
+		var x2 = x1;
+		var y2 = y1;
 		self.point1.setAttribute( 'cx', x1 );
 		self.point1.setAttribute( 'cy', y1 );
 		self.point1.style.visibility = 'visible';
@@ -48,12 +49,20 @@ SWEEP.Input = function () {
 		self.line.style.visibility = 'visible';
 
 		document.addEventListener( 'mousemove', continueDraw, false );
-		document.addEventListener( 'mouseup',   endDraw,      false );
+		document.addEventListener( 'touchmove', continueDraw, false );
+
+		document.addEventListener( 'mouseup',     endDraw, false );
+		document.addEventListener( 'touchend',    endDraw, false );
+		document.addEventListener( 'touchcancel', cancelDraw, false );
+		document.addEventListener( 'touchleave',  cancelDraw, false );
 
 		function continueDraw( event ) {
 
-			x2 = event.clientX;
-			y2 = event.clientY;
+			event.preventDefault();
+			event.stopPropagation();
+
+			x2 = event.clientX || event.touches[ 0 ].clientX;
+			y2 = event.clientY || event.touches[ 0 ].clientY;
 			self.point2.setAttribute( 'cx', x2 );
 			self.point2.setAttribute( 'cy', y2 );
 			self.line.setAttribute( 'x2', x2 );
@@ -63,16 +72,26 @@ SWEEP.Input = function () {
 
 		function endDraw() {
 
+			if ( y2 <= SWEEP.SVG.drawingAreaHeight ) {
+				new SWEEP.Line( x1, y1, x2, y2 );
+			}
+			cancelDraw();
+
+		}
+
+		function cancelDraw() {
+
 			self.point1.style.visibility = 'hidden';
 			self.point2.style.visibility = 'hidden';
 			self.line.style.visibility = 'hidden';
 
-			if ( y2 <= SWEEP.SVG.drawingAreaHeight ) {
-				new SWEEP.Line( x1, y1, x2, y2 );
-			}
-
 			document.removeEventListener( 'mousemove', continueDraw, false );
-			document.removeEventListener( 'mouseup',   endDraw,      false );
+			document.removeEventListener( 'touchmove', continueDraw, false );
+
+			document.removeEventListener( 'mouseup',     endDraw, false );
+			document.removeEventListener( 'touchend',    endDraw, false );
+			document.removeEventListener( 'touchcancel', cancelDraw, false );
+			document.removeEventListener( 'touchleave',  cancelDraw, false );
 
 		}
 
