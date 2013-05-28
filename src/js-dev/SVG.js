@@ -11,6 +11,7 @@ SWEEP.SVG = {
 		this.addGroup( 'sweepline' );
 		this.addGroup( 'line' );
 		this.addGroup( 'point' );
+		this.addGroup( 'gui' );
 
 		function onWindowResize() {
 			self.resize();
@@ -20,12 +21,14 @@ SWEEP.SVG = {
 	},
 
 	resize: function () {
-		this.w = window.innerWidth;
-		this.h = window.innerHeight;
-		this.context.setAttribute( 'viewBox', '0, 0,' + this.w + ',' + this.h );
-		this.context.setAttribute( 'width', this.w + 'px' );
-		this.context.setAttribute( 'height', this.h + 'px' );
-		SWEEP.Sweepline.setWidth( this.w );
+		this.width = window.innerWidth;
+		this.height = window.innerHeight;
+		this.drawingAreaHeight = Math.round( this.height * 0.9 );
+		this.context.setAttribute( 'viewBox', '0, 0,' + this.width + ',' + this.height );
+		this.context.setAttribute( 'width', this.width + 'px' );
+		this.context.setAttribute( 'height', this.height + 'px' );
+		SWEEP.Sweepline.setWidth( this.width );
+		SWEEP.Gui.setDimensions( this.width, this.height, this.drawingAreaHeight );
 	},
 
 	addGroup: function ( name ) {

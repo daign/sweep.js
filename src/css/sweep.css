@@ -27,6 +27,9 @@ body {
 	stroke: #157;
 	stroke-width: 2px;
 }
+.guibackground{
+	fill: #939;
+}
 .button {
 	color: #157;
 	border: 2px solid #bbb;
