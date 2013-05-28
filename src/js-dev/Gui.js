@@ -2,57 +2,48 @@ SWEEP.Gui = {
 
 	init: function () {
 
-		this.random = document.createElement( 'div' );
-		this.random.innerHTML = '<br/>Random';
-		this.random.setAttribute( 'class', 'button' );
-		this.random.style.position = 'absolute';
-		this.random.style.bottom = '0px';
-		this.random.style.left = '0px';
+		this.background = document.createElementNS( SWEEP.SVGNS, 'rect' );
+		this.background.setAttribute( 'x', 0 );
+		this.background.setAttribute( 'class', 'guibackground' );
+		SWEEP.SVG.append( this.background, 'gui' );
 
-		this.clear = document.createElement( 'div' );
-		this.clear.innerHTML = '<br/>Clear';
-		this.clear.setAttribute( 'class', 'button' );
-		this.clear.style.position = 'absolute';
-		this.clear.style.bottom = '0px';
-		this.clear.style.left = '90px';
+		this.buttons = [];
 
-		this.sweep = document.createElement( 'div' );
-		this.sweep.innerHTML = '<br/>Sweep';
-		this.sweep.setAttribute( 'class', 'button' );
-		this.sweep.style.position = 'absolute';
-		this.sweep.style.bottom = '0px';
-		this.sweep.style.left = '180px';
-
-		document.body.appendChild( this.random );
-		document.body.appendChild( this.clear );
-		document.body.appendChild( this.sweep );
-
-		function addRandomLine() {
-			if ( SWEEP.sweepActive ) { return; }
+		this.buttons.push( new SWEEP.Button( 'Random', function () {
 			new SWEEP.Line(
-				Math.random() * SWEEP.SVG.w,
-				Math.random() * SWEEP.SVG.h,
-				Math.random() * SWEEP.SVG.w,
-				Math.random() * SWEEP.SVG.h
+				Math.random() * SWEEP.SVG.width,
+				Math.random() * SWEEP.SVG.drawingAreaHeight,
+				Math.random() * SWEEP.SVG.width,
+				Math.random() * SWEEP.SVG.drawingAreaHeight
 			);
-		}
-
-		function clear() {
-			if ( SWEEP.sweepActive ) { return; }
+		} ) );
+		this.buttons.push( new SWEEP.Button( 'Clear', function () {
 			SWEEP.SVG.removeAll( 'line' );
 			SWEEP.SVG.removeAll( 'point' );
 			SWEEP.points.clear();
 			SWEEP.events.clear();
-		}
-
-		function sweep() {
-			if ( SWEEP.sweepActive ) { return; }
+		} ) );
+		this.buttons.push( new SWEEP.Button( 'Sweep', function () {
 			SWEEP.sweep();
-		}
+		} ) );
+/*		this.buttons.push( new SWEEP.Button( 'About', function () {
+			console.log( 'about' );
+		} ) );
+*/
+	},
 
-		this.random.addEventListener( 'click', addRandomLine, false );
-		this.clear.addEventListener( 'click', clear, false );
-		this.sweep.addEventListener( 'click', sweep, false );
+	setDimensions: function ( y, width, height ) {
+
+		this.background.setAttribute( 'y', y );
+		this.background.setAttribute( 'width', width );
+		this.background.setAttribute( 'height', height );
+
+		var spacing = Math.round( height*0.1 );
+
+		var x = spacing;
+		for ( var i = 0; i < this.buttons.length; i++ ) {
+			x += spacing + this.buttons[ i ].setGeometry( x, y, height );
+		}
 
 	}
 

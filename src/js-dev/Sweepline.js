@@ -191,11 +191,15 @@ SWEEP.Sweepline = {
 				next.animate();
 			} );
 
-		} else {
+		} else if ( this.position < SWEEP.SVG.drawingAreaHeight + 41 ) {
 
-			this.sweepTo( SWEEP.SVG.h+41, function () {
+			this.sweepTo( SWEEP.SVG.drawingAreaHeight + 41, function () {
 				SWEEP.onEnd();
 			} );
+
+		} else {
+
+			SWEEP.onEnd();
 
 		}
 
