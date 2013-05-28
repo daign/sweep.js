@@ -26,22 +26,23 @@ SWEEP.Gui = {
 		this.buttons.push( new SWEEP.Button( 'Sweep', function () {
 			SWEEP.sweep();
 		} ) );
-	/*	this.buttons.push( new SWEEP.Button( 'About', function () {
+/*		this.buttons.push( new SWEEP.Button( 'About', function () {
 			console.log( 'about' );
 		} ) );
 */
 	},
 
-	setDimensions: function ( w, h, d ) {
+	setDimensions: function ( y, width, height ) {
 
-		this.background.setAttribute( 'y', d );
-		this.background.setAttribute( 'width', w );
-		this.background.setAttribute( 'height', h-d );
+		this.background.setAttribute( 'y', y );
+		this.background.setAttribute( 'width', width );
+		this.background.setAttribute( 'height', height );
 
-		var left = 0;
+		var spacing = Math.round( height*0.1 );
+
+		var x = spacing;
 		for ( var i = 0; i < this.buttons.length; i++ ) {
-			this.buttons[ i ].setGeometry( left );
-			left += 90;
+			x += spacing + this.buttons[ i ].setGeometry( x, y, height );
 		}
 
 	}

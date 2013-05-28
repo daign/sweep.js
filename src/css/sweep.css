@@ -27,20 +27,19 @@ body {
 	stroke: #157;
 	stroke-width: 2px;
 }
-.guibackground{
+.guibackground {
 	fill: #939;
 }
 .button {
-	color: #157;
-	border: 2px solid #bbb;
-	background: #eee;
-	text-align: center;
-	width: 80px;
-	height: 60px;
+	fill: url(#button);
 	cursor: pointer;
-	-webkit-border-radius: 8px;
-	font-weight: bold;
 }
-.button:hover { background: #f3f3f3; }
-.button:active { background: #f9f9f9; }
+.button:hover { fill: url(#buttonhover); }
+.button:active { fill: url(#buttonactive); }
+.buttonText {
+	fill: #fff;
+	pointer-events: none;
+	font-weight: bold;
+	text-shadow: #525 2px 2px 4px;
+}
 

@@ -23,12 +23,12 @@ SWEEP.SVG = {
 	resize: function () {
 		this.width = window.innerWidth;
 		this.height = window.innerHeight;
-		this.drawingAreaHeight = Math.round( this.height * 0.9 );
+		this.drawingAreaHeight = Math.min( Math.round( this.height * 0.9 ), this.height-20 );
 		this.context.setAttribute( 'viewBox', '0, 0,' + this.width + ',' + this.height );
 		this.context.setAttribute( 'width', this.width + 'px' );
 		this.context.setAttribute( 'height', this.height + 'px' );
 		SWEEP.Sweepline.setWidth( this.width );
-		SWEEP.Gui.setDimensions( this.width, this.height, this.drawingAreaHeight );
+		SWEEP.Gui.setDimensions( this.drawingAreaHeight, this.width, this.height-this.drawingAreaHeight );
 	},
 
 	addGroup: function ( name ) {
