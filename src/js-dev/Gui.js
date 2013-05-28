@@ -9,7 +9,7 @@ SWEEP.Gui = {
 
 		this.buttons = [];
 
-		this.buttons.push( new SWEEP.Button( 'Random', function () {
+		this.buttons.push( new SWEEP.Button( '+1', function () {
 			new SWEEP.Line(
 				Math.random() * SWEEP.SVG.width,
 				Math.random() * SWEEP.SVG.drawingAreaHeight,
@@ -26,7 +26,7 @@ SWEEP.Gui = {
 		this.buttons.push( new SWEEP.Button( 'Sweep', function () {
 			SWEEP.sweep();
 		} ) );
-/*		this.buttons.push( new SWEEP.Button( 'About', function () {
+/*		this.buttons.push( new SWEEP.Button( '?', function () {
 			console.log( 'about' );
 		} ) );
 */
@@ -42,7 +42,7 @@ SWEEP.Gui = {
 
 		var x = spacing;
 		for ( var i = 0; i < this.buttons.length; i++ ) {
-			x += spacing + this.buttons[ i ].setGeometry( x, y, height );
+			x += spacing + this.buttons[ i ].setGeometry( x, y, height, spacing*3 );
 		}
 
 	}

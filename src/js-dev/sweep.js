@@ -20,6 +20,8 @@ var SWEEP = {
 		SWEEP.Sweepline.init();
 		SWEEP.SVG.resize();
 
+		SWEEP.Input();
+
 		animate();
 		function animate() {
 			requestAnimationFrame( animate );
