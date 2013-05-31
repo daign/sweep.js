@@ -9,27 +9,21 @@ SWEEP.Gui = {
 
 		this.buttons = [];
 
-		this.buttons.push( new SWEEP.Button( '+1', function () {
-			new SWEEP.Line(
-				Math.random() * SWEEP.SVG.width,
-				Math.random() * SWEEP.SVG.drawingAreaHeight,
-				Math.random() * SWEEP.SVG.width,
-				Math.random() * SWEEP.SVG.drawingAreaHeight
-			);
-		} ) );
 		this.buttons.push( new SWEEP.Button( 'Clear', function () {
+			SWEEP.Info.setVisibility( false );
 			SWEEP.SVG.removeAll( 'line' );
 			SWEEP.SVG.removeAll( 'point' );
 			SWEEP.points.clear();
 			SWEEP.events.clear();
 		} ) );
 		this.buttons.push( new SWEEP.Button( 'Sweep', function () {
+			SWEEP.Info.setVisibility( false );
 			SWEEP.sweep();
 		} ) );
-/*		this.buttons.push( new SWEEP.Button( '?', function () {
-			console.log( 'about' );
+		this.buttons.push( new SWEEP.Button( 'About', function () {
+			SWEEP.Info.toggleVisibility();
 		} ) );
-*/
+
 	},
 
 	setDimensions: function ( y, width, height ) {

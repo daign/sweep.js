@@ -5,6 +5,7 @@ FILES = "\
 	../src/js-dev/SVG.js\
 	../src/js-dev/Gui.js\
 	../src/js-dev/Button.js\
+	../src/js-dev/Info.js\
 	../src/js-dev/Input.js\
 	../src/js-dev/Sweepline.js\
 	../src/js-dev/Point.js\
