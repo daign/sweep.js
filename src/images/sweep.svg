@@ -4,11 +4,18 @@
 <svg	xmlns="http://www.w3.org/2000/svg"
 		version="1.1"
 		xmlns:xlink="http://www.w3.org/1999/xlink"
-		viewBox="0,0,24,24">
+		viewBox="0,0,100,100">
 
 	<title>Sweep</title>
 
 	<defs>
+		<style>
+			text { font-family: sans-serif; }
+			.text1 { font-size: 16px; font-weight: bold; }
+			.text2 { font-size: 4px; }
+			.text3 { font-size: 8px; font-weight: bold; }
+			.link { fill: #157; text-decoration: underline; }
+		</style>
 		<linearGradient id="sweepline" x1="0%" y1="100%" x2="0%" y2="0%">
 			<stop offset="0%" style="stop-color: #ccf; stop-opacity: 1;" />
 			<stop offset="100%" style="stop-color: #fff; stop-opacity: 1;" />
@@ -26,7 +33,19 @@
 			<stop offset="0%" style="stop-color: #939; stop-opacity: 1;" />
 			<stop offset="100%" style="stop-color: #525; stop-opacity: 1;" />
 		</linearGradient>
+		<g id="info">
+			<text x="17" y="17" class="text1">sweep.js</text>
+			<text x="5"  y="30" class="text2">a sweep line algorithm for line segment intersection</text>
+			<text x="14" y="43" class="text3">Draw a line to start!</text>
+			<text x="26" y="69" class="text2">Visit this project on GitHub:</text>
+			<a xlink:href="https://github.com/daign/sweep.js">
+				<text x="20" y="76" class="text2 link" id="githublink">https://github.com/daign/sweep.js</text>
+			</a>
+			<text x="25" y="93" class="text2">Licensed under MIT License</text>
+		</g>
 	</defs>
+
+	<use xlink:href="#info" />
 
 </svg>
 

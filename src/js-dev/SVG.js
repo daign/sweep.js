@@ -4,6 +4,7 @@ SWEEP.SVG = {
 
 		var self = this;
 		this.context = document.createElementNS( SWEEP.SVGNS, 'svg' );
+		this.context.setAttribute( 'xmlns:xlink', SWEEP.XLink );
 		document.body.appendChild( this.context );
 
 		this.context.appendChild( this.loadXML( 'images/sweep.svg' ).documentElement.firstElementChild.nextElementSibling );
@@ -29,6 +30,7 @@ SWEEP.SVG = {
 		this.context.setAttribute( 'height', this.height + 'px' );
 		SWEEP.Sweepline.setWidth( this.width );
 		SWEEP.Gui.setDimensions( this.drawingAreaHeight, this.width, this.height-this.drawingAreaHeight );
+		SWEEP.Info.setDimensions( this.width, this.drawingAreaHeight );
 	},
 
 	addGroup: function ( name ) {

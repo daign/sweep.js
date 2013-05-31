@@ -1,6 +1,7 @@
 var SWEEP = {
 
 	SVGNS: 'http://www.w3.org/2000/svg',
+	XLink: 'http://www.w3.org/1999/xlink',
 
 	animationSpeed: 1,
 	sweepActive: false,
@@ -17,6 +18,7 @@ var SWEEP = {
 
 		SWEEP.SVG.init();
 		SWEEP.Gui.init();
+		SWEEP.Info.init();
 		SWEEP.Sweepline.init();
 		SWEEP.SVG.resize();
 

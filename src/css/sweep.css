@@ -30,6 +30,10 @@ body {
 .guibackground {
 	fill: #939;
 }
+.guiabout {
+	fill: #dcb;
+	opacity: 0.8;
+}
 .button {
 	fill: url(#button);
 	cursor: pointer;
