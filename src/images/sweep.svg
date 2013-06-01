@@ -15,6 +15,10 @@
 			.text2 { font-size: 4px; }
 			.text3 { font-size: 8px; font-weight: bold; }
 			.link { fill: #157; text-decoration: underline; }
+			.sweeprect { fill: url(#sweepline); }
+			.button { fill: url(#button); cursor: pointer; }
+			.button:hover { fill: url(#buttonhover); }
+			.button:active { fill: url(#buttonactive); }
 		</style>
 		<linearGradient id="sweepline" x1="0%" y1="100%" x2="0%" y2="0%">
 			<stop offset="0%" style="stop-color: #ccf; stop-opacity: 1;" />

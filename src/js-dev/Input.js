@@ -28,7 +28,6 @@ SWEEP.Input = function () {
 
 		if ( SWEEP.sweepActive ) { return; }
 		if ( ( event.clientY || event.touches[ 0 ].clientY ) > SWEEP.SVG.drawingAreaHeight ) { return };
-		if ( event.toElement && event.toElement.id === 'githublink' ) { return; }
 
 		event.preventDefault();
 		event.stopPropagation();
@@ -104,6 +103,17 @@ SWEEP.Input = function () {
 			document.removeEventListener( 'touchleave',  cancelDraw, false );
 
 		}
+
+	}
+
+	var link = document.getElementById( 'githublink' );
+	link.addEventListener( 'mousedown',  preventDraw, false );
+	link.addEventListener( 'touchstart', preventDraw, false );
+
+	function preventDraw( event ) {
+
+		event.preventDefault();
+		event.stopPropagation();
 
 	}
 

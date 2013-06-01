@@ -11,9 +11,6 @@ body {
 	stroke-width: 2px;
 	stroke-linecap: round;
 }
-.sweeprect {
-	fill: url(#sweepline);
-}
 .line {
 	fill: none;
 	stroke: #ccc;
@@ -34,12 +31,6 @@ body {
 	fill: #dcb;
 	opacity: 0.8;
 }
-.button {
-	fill: url(#button);
-	cursor: pointer;
-}
-.button:hover { fill: url(#buttonhover); }
-.button:active { fill: url(#buttonactive); }
 .buttonText {
 	fill: #fff;
 	pointer-events: none;

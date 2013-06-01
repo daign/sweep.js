@@ -27,7 +27,7 @@ SWEEP.Button.prototype = {
 	setGeometry: function ( x, y, height, padding ) {
 
 		this.text.style.fontSize = height*0.5 + 'px';
-		var width = this.text.offsetWidth;
+		var width = this.text.offsetWidth || this.text.getBBox().width;
 
 		this.text.setAttribute( 'x', x+padding );
 		this.text.setAttribute( 'y', y+height*0.68 );
