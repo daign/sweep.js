@@ -21,8 +21,8 @@ SWEEP.Input = function () {
 	this.line.style.visibility = 'hidden';
 	SWEEP.SVG.append( this.line, 'gui' );
 
-	document.addEventListener( 'mousedown', beginDraw, false );
-	document.addEventListener( 'touchstart', beginDraw, false);
+	document.addEventListener( 'mousedown',  beginDraw, false );
+	document.addEventListener( 'touchstart', beginDraw, false );
 
 	function beginDraw( event ) {
 
@@ -112,7 +112,6 @@ SWEEP.Input = function () {
 
 	function preventDraw( event ) {
 
-		event.preventDefault();
 		event.stopPropagation();
 
 	}
