@@ -87,13 +87,16 @@ SWEEP.Line.prototype = {
 
 		var n = (bx-ax) * (dy-cy) - (by-ay) * (dx-cx);
 		if ( n !== 0 ) {
-			var s = ((cx-ax)*(dy-cy) - (cy-ay)*(dx-cx)) / n;
-			var t = (ax-cx+s*(bx-ax))/(dx-cx)
+
+			var s = ((ax-cx)*(dy-cy) - (ay-cy)*(dx-cx)) / -n;
+			var t = ((cx-ax)*(by-ay) - (cy-ay)*(bx-ax)) / n;
+
 			if ( 0<=s && s<=1 && 0<=t && t<=1 ) {
 				var x = ax + s*(bx-ax);
 				var y = ay + s*(by-ay);
 				return [x,y];
 			}
+
 		}
 
 		return null;
