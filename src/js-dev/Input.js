@@ -108,7 +108,6 @@ SWEEP.Input = function () {
 
 	var link = document.getElementById( 'githublink' );
 	link.addEventListener( 'mousedown',  preventDraw, false );
-	link.addEventListener( 'touchstart', preventDraw, false );
 
 	function preventDraw( event ) {
 
