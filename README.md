@@ -12,3 +12,5 @@ Dependencies:
 * [tween.js](https://github.com/sole/tween.js)
 * requestAnimationFrame from [three.js](https://github.com/mrdoob/three.js)
 
+![example](./example.png)
+
